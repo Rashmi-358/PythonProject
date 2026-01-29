@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Order History</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+  />
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
+  <style>
+    body {
+      background-color: #f5f7fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+      padding-bottom: 50px;
+    }
+
+    .navbar-brand {
+      font-weight: 700;
+      color: #dc3545 !important;
+      letter-spacing: 1px;
+      font-size: 1.5rem;
+    }
+
+    h1 {
+      margin: 40px 0 20px;
+      font-weight: 700;
+      color: #212529;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    .customer-info {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      font-weight: 600;
+      color: #555;
+      text-align: center;
+    }
+
+    .table thead th {
+      background-color: #dc3545;
+      color: white;
+      text-align: center;
+      vertical-align: middle;
+      font-weight: 600;
+    }
+
+    .table tbody td {
+      vertical-align: middle;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border: none;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+      text-decoration: none;
+      color: white;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+      .customer-info {
+        font-size: 1rem;
+      }
+      .table {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <a class="navbar-brand" href="#">CIVIL CONTRACTOR</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/supplier_bill_histry/{{a}}">Order History</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/supplier_product_details/{{a}}">Material List</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/logout">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1>Order History</h1>
+
+    <div class="customer-info">
+      Customer Name: {{ cust[4] }}
+    </div>
+
+    <div>
+      {{ msg }}
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover shadow-sm">
+        <thead>
+          <tr>
+            <th>S No</th>
+            <th>Material Name</th>
+            <th>Quantity</th>
+            <th>Date Of Booked</th>
+            <th>Make Bill</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in rows %}
+          <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[2] }}</td>
+            <td>{{ row[3] }}</td>
+            <td>{{ row[5] }}</td>
+            <td>
+              <a href="/make_bill/{{ row[0] }}" class="btn btn-primary btn-sm">Bill</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

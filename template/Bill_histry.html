@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bill</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+  />
+  <style>
+    body {
+      background: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 1.5rem;
+      letter-spacing: 1.2px;
+    }
+    h1 {
+      margin: 40px 0 20px;
+      font-weight: 800;
+      color: #343a40;
+      text-align: center;
+    }
+    .container {
+      max-width: 900px;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+      margin-bottom: 40px;
+    }
+    .customer-info {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 25px;
+      color: #495057;
+    }
+    table.table {
+      background: #fff;
+    }
+    thead th {
+      background-color: #dc3545;
+      color: #fff;
+      text-align: center;
+      font-weight: 700;
+      border: none;
+    }
+    tbody td {
+      vertical-align: middle;
+      text-align: center;
+      font-size: 1rem;
+      border-top: 1px solid #dee2e6;
+    }
+    tbody tr:hover {
+      background-color: #f1f1f1;
+    }
+    .btn-success {
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+    }
+    .btn-success:hover {
+      background-color: #28a745cc;
+    }
+    /* Modal overrides */
+    .modal-header {
+      background-color: #dc3545;
+      color: #fff;
+      font-weight: 700;
+      border-bottom: none;
+    }
+    .modal-title {
+      font-size: 1.25rem;
+    }
+    .modal-footer {
+      border-top: none;
+      padding: 1rem 1.5rem;
+    }
+    .form-check-label {
+      font-weight: 500;
+      font-size: 1rem;
+    }
+    .form-text {
+      font-size: 0.85rem;
+      color: #6c757d;
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">CIVIL CONTRACTOR</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/home/{{a}}">Home</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/checkout/{{a}}">Material Check Out</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/bill_histry/{{a}}">Order History</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/product_details/{{a}}">Purchase Material</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<h1>Bill</h1>
+
+<div class="container">
+  <div class="customer-info">
+    {{msg}}<br />
+    Customer Name: <strong>{{cust[1]}}</strong>
+  </div>
+
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>Product Name</th>
+        <th>Quantity</th>
+        <th>Price (₹)</th>
+        <th>Total Amount (₹)</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+      <tr>
+        <td>{{row[2]}}</td>
+        <td>{{row[3]}}</td>
+        <td>{{row[4]}}</td>
+        <td>{{row[5]}}</td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-success btn-sm"
+            data-toggle="modal"
+            data-target="#payModal{{ loop.index }}"
+          >
+            Pay ₹{{ row[5] }}
+          </button>
+
+          <!-- Modal -->
+          <div
+            class="modal fade"
+            id="payModal{{ loop.index }}"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="payModalLabel{{ loop.index }}"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <form action="/payment" method="POST" target="_blank">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="payModalLabel{{ loop.index }}">
+                      Select Payment Method
+                    </h5>
+                    <button
+                      type="button"
+                      class="close text-white"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <input type="hidden" name="amount" value="{{ row[5] }}" />
+                    <input type="hidden" name="customer" value="{{ a }}" />
+
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="payment_method"
+                        value="Cash"
+                        id="cash{{ loop.index }}"
+                        required
+                      />
+                      <label class="form-check-label" for="cash{{ loop.index }}"
+                        >Cash</label
+                      >
+                    </div>
+
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="payment_method"
+                        value="Card"
+                        id="card{{ loop.index }}"
+                      />
+                      <label class="form-check-label" for="card{{ loop.index }}"
+                        >Card</label
+                      >
+                    </div>
+
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="payment_method"
+                        value="UPI"
+                        id="upi{{ loop.index }}"
+                      />
+                      <label class="form-check-label" for="upi{{ loop.index }}"
+                        >UPI (Scan & Pay)</label
+                      >
+                    </div>
+
+                    <small class="form-text text-muted mt-2">
+                      If UPI is selected, a QR code will be shown on the next
+                      screen.
+                    </small>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-block">
+                      Proceed to Pay
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

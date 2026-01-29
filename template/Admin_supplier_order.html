@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Supplier Order List</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #dfe9f3, #ffffff);
+      font-family: 'Segoe UI', sans-serif;
+      padding-bottom: 40px;
+    }
+
+    .navbar {
+      background-color: #37474f;
+    }
+
+    .navbar .navbar-brand,
+    .navbar .nav-link {
+      color: #fff !important;
+      font-weight: 600;
+    }
+
+    .navbar .nav-link:hover {
+      color: #ffd600 !important;
+    }
+
+    h1 {
+      color: #263238;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 40px;
+      margin-bottom: 20px;
+    }
+
+    .table-container {
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+
+    .table thead {
+      background-color: #37474f;
+      color: #fff;
+    }
+
+    .table tbody tr:nth-child(even) {
+      background-color: #f4f7f9;
+    }
+
+    .btn-danger {
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .container {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+  <a class="navbar-brand" href="#">CIVIL CONTRACTOR</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item"><a class="nav-link" href="/admin_add_product">Add Product</a></li>
+      <li class="nav-item"><a class="nav-link" href="/purchase_list">Order List</a></li>
+      <li class="nav-item"><a class="nav-link" href="/user_list">User List</a></li>
+      <li class="nav-item"><a class="nav-link" href="/contract_user_list">User Contract List</a></li>
+      <li class="nav-item"><a class="nav-link" href="/supplier_list">Supplier List</a></li>
+      <li class="nav-item"><a class="nav-link" href="/supplier_order_list">Supplier Order List</a></li>
+      <li class="nav-item"><a class="nav-link" href="/bill_list_supplier">Confirmed Orders</a></li>
+      <li class="nav-item"><a class="nav-link" href="/product_list">Product List</a></li>
+      <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+  <h1>Supplier Order List</h1>
+  <div class="table-container">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Customer Name</th>
+          <th>Supplier Name</th>
+          <th>Material Name</th>
+          <th>Qty</th>
+          <th>Date</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+        <tr>
+          <td>{{ row[0] }}</td>
+          <td>{{ row[1] }}</td>
+          <td>{{ row[4] }}</td>
+          <td>{{ row[2] }}</td>
+          <td>{{ row[3] }}</td>
+          <td>{{ row[5] }}</td>
+          <td><a href="/delete_user/{{ row[0] }}" class="btn btn-danger">Delete</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>
