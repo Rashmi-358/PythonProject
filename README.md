@@ -1,0 +1,2 @@
+This project is designed to store and manage ongoing construction building information in a digital system. It allows both the construction company and the building owner to view and monitor project details easily.
+The system helps in maintaining transparency between the company and the client by providing access to important project-related data such as construction progress, records, and updates.
